@@ -1,0 +1,84 @@
+@function pixelize($colors, $size) {
+  $result: '';
+  $numRows: length($colors);
+
+  @for $rowIndex from 1 through $numRows {
+    $y: ($rowIndex - 1);
+    $row: nth($colors, $rowIndex);
+    $numCols: length($row);
+
+    @for $cellIndex from 1 through $numCols {
+      $x: ($cellIndex - 1);
+      $color: nth($row, $cellIndex);
+      
+      $sep: ',';
+      @if $x == 0 and $y == 0 {
+        $sep: '';
+      }
+      
+      $result: $result + '#{$sep} #{$x * $size} #{$y * $size} #{$color}'
+    }
+  }
+  
+  $result: unquote($result);
+  @return $result;
+}
+
+
+$size: 10px;
+
+$drkpink: #f1cad0;
+$lghtpink: #f2e5e4;
+$green: #1b3c40;
+$beige: #faf8f5;
+$black: #0d0d0d;
+$hlght: #f4f8f7;
+$shd: #ccbeb6;
+
+$chiaki: (
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $black, $black, $black, $drkpink, $black, $black, $black, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink),//1
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $black, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $black, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $black, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //2
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //3
+  ($drkpink, $drkpink, $drkpink, $drkpink, $black, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $black, $drkpink, $drkpink, $drkpink, $drkpink), //4
+  ($drkpink, $drkpink, $drkpink, $drkpink, $black, $hlght, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $hlght, $black, $drkpink, $drkpink, $drkpink, $drkpink), //5
+  ($drkpink, $drkpink, $drkpink, $black, $lghtpink, $lghtpink, $hlght, $hlght, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $lghtpink, $hlght, $hlght, $lghtpink, $lghtpink, $black, $drkpink, $drkpink, $drkpink), //6
+  ($drkpink, $drkpink, $drkpink, $black, $lghtpink, $black, $lghtpink, $black, $hlght, $shd, $hlght, $shd, $hlght, $hlght, $shd, $hlght, $hlght, $black, $black, $black, $lghtpink, $black, $drkpink, $drkpink, $drkpink), //7
+  ($drkpink, $drkpink, $drkpink, $black, $lghtpink, $black, $lghtpink, $black, $lghtpink, $shd, $lghtpink, $shd, $lghtpink, $lghtpink, $black, $lghtpink, $lghtpink, $black, $lghtpink, $black, $lghtpink, $black, $drkpink, $drkpink, $drkpink), //8
+  ($drkpink, $drkpink, $drkpink, $black, $lghtpink, $black, $lghtpink, $black, $lghtpink, $shd, $lghtpink, $shd, $lghtpink, $black, $beige, $black, $lghtpink, $black, $black, $black, $lghtpink, $black, $drkpink, $drkpink, $drkpink), //9
+  ($drkpink, $drkpink, $drkpink, $black, $lghtpink, $black, $lghtpink, $black, $black, $black, $black, $black, $black, $black, $beige, $beige, $black, $black, $lghtpink, $black, $lghtpink, $black, $drkpink, $drkpink, $drkpink),//10
+  ($drkpink, $drkpink, $drkpink, $black, $lghtpink, $black, $lghtpink, $black, $beige, $black, $black, $beige, $beige, $beige, $black, $black, $beige, $black, $lghtpink, $black, $lghtpink, $black, $drkpink, $drkpink, $drkpink), //11
+  ($drkpink, $black, $black, $lghtpink, $lghtpink, $black, $lghtpink, $black, $beige, $black, $black, $beige, $beige, $beige, $black, $black, $beige, $black, $lghtpink, $black, $lghtpink, $black, $drkpink, $drkpink, $drkpink), //12
+  ($black, $lghtpink, $lghtpink, $black, $lghtpink, $black, $lghtpink, $black, $beige, $beige, $beige, $beige, $beige, $beige, $beige, $beige, $beige, $black, $lghtpink, $black, $shd, $lghtpink, $black, $black, $drkpink), //13
+  ($black, $black, $black, $lghtpink, $shd, $black, $lghtpink, $black, $beige, $beige, $beige, $black, $black, $black, $beige, $beige, $beige, $black, $lghtpink, $black, $shd, $black, $lghtpink, $lghtpink, $black),//14 
+  ($black, $lghtpink, $lghtpink, $black, $shd, $black, $lghtpink, $lghtpink, $black, $beige, $beige, $beige, $beige, $beige, $beige, $beige, $black, $lghtpink, $lghtpink, $black, $black, $lghtpink, $black, $black, $black), //15
+  ($black, $black, $black, $shd, $black, $shd, $black, $black, $green, $black, $black, $black, $black, $black, $black, $black, $green, $black, $black, $shd, $lghtpink, $black, $lghtpink, $lghtpink, $black), //16
+  ($drkpink, $black, $shd, $black, $shd, $black, $shd, $black, $beige, $green, $black, $drkpink, $black, $drkpink, $black, $green, $beige, $black, $shd, $black, $lghtpink, $lghtpink, $black, $black, $drkpink), //17
+  ($drkpink, $drkpink, $black, $drkpink, $black, $shd, $black, $green, $green, $beige, $black, $black, $black, $black, $black, $beige, $green, $green, $black, $shd, $black, $black, $drkpink, $drkpink, $drkpink), //18
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $black, $green, $black, $beige, $black, $beige, $green, $beige, $black, $beige, $black, $green, $black, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //19
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $green, $black, $green, $black, $beige, $green, $beige, $black, $green, $black, $green, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //20
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $green, $black, $green, $black, $beige, $green, $beige, $black, $green, $black, $green, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //21
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $green, $black, $green, $black, $black, $black, $black, $black, $green, $black, $green, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //22
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $black, $green, $green, $black, $beige, $beige, $beige, $black, $green, $green, $black, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //23
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $black, $black, $black, $black, $black, $black, $black, $black, $black, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //24
+   
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $beige, $beige, $black, $drkpink, $black, $beige, $beige, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink),//25
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $green, $green, $black, $drkpink, $black, $green, $green, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //26
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $beige, $beige, $black, $drkpink, $black, $beige, $beige, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink), //27
+  ($drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $black, $black, $black, $black, $drkpink, $black, $black, $black, $black, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink, $drkpink) //28
+  );
+#chiaki {
+  position: relative;
+  width: calc(25 * #{$size}); 
+  height: calc(28 * #{$size}); 
+  margin: 1rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: $size;
+    height: $size;
+    box-shadow: pixelize($chiaki, $size);
+  }
+}
